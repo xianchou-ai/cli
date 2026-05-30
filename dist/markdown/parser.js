@@ -1,0 +1,60 @@
+import { readFile } from 'node:fs/promises';
+import matter from 'gray-matter';
+const headingPattern = /^(#{1,6})\s+(.+?)\s*$/;
+export async function readMarkdownDocument(filePath) {
+    const raw = await readFile(filePath, 'utf8');
+    const parsed = matter(raw);
+    return {
+        filePath,
+        raw,
+        data: parsed.data,
+        content: parsed.content,
+    };
+}
+export function getTitle(document) {
+    const title = document.data.title;
+    if (typeof title === 'string' && title.trim())
+        return title.trim();
+    const h1 = extractHeadings(document.content).find((heading) => heading.depth === 1);
+    return h1?.text || '';
+}
+export function getDescription(document) {
+    const description = document.data.description;
+    if (typeof description === 'string')
+        return description;
+    const summary = document.data.summary;
+    if (Array.isArray(summary))
+        return summary.filter(Boolean).join(' ');
+    return '';
+}
+export function getStringArrayField(document, field) {
+    const value = document.data[field];
+    return Array.isArray(value)
+        ? value.filter((item) => typeof item === 'string')
+        : [];
+}
+export function extractHeadings(content) {
+    return content.split(/\r?\n/).flatMap((line, lineIndex) => {
+        const match = line.match(headingPattern);
+        if (!match)
+            return [];
+        return [
+            {
+                depth: match[1].length,
+                text: match[2].replace(/[#*_`]/g, '').trim(),
+                lineIndex,
+            },
+        ];
+    });
+}
+export function slugFromDocument(document) {
+    const slug = document.data.slug;
+    if (typeof slug === 'string' && slug.trim())
+        return slug.trim();
+    const title = getTitle(document);
+    return title
+        .toLowerCase()
+        .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'article';
+}
+//# sourceMappingURL=parser.js.map

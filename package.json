@@ -1,0 +1,34 @@
+{
+  "name": "@xianchou/cli",
+  "version": "0.1.2",
+  "description": "Xianchou CLI for AI image generation and Markdown image insertion.",
+  "type": "module",
+  "bin": {
+    "xianchou": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "latest",
+    "gray-matter": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  },
+  "packageManager": "pnpm@10.13.1"
+}
