@@ -1,5 +1,11 @@
 # 献丑 CLI
 
+[![npm](https://img.shields.io/npm/v/@xianchou/cli)](https://www.npmjs.com/package/@xianchou/cli)
+[![GitHub](https://img.shields.io/github/license/xianchou-ai/cli)](https://github.com/xianchou-ai/cli)
+
+- GitHub：<https://github.com/xianchou-ai/cli>
+- npmjs：<https://www.npmjs.com/package/@xianchou/cli>
+
 `xianchou` 是献丑面向公开用户和 AI Agent 的命令行工具。它通过 `/api/cli` 专用接口进行 AI 生图、AI 生视频，并可以为任意 Markdown 自动生成和插入图片。
 
 ## 安装
